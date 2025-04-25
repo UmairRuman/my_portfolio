@@ -1,4 +1,12 @@
-function App() {
-  return <h1>Hello i am going to build my portfolio</h1>;
-}
+import { BrowserRouter } from "react-router-dom";
+import Router from "./routes/Router";
+import Navbar from "./components/layout/Navbar";
+
+const App = () => (
+  <BrowserRouter>
+    <Navbar />
+    <Router />
+  </BrowserRouter>
+);
+
 export default App;
