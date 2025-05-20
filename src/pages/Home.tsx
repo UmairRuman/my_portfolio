@@ -4,6 +4,7 @@ import profileImage from "../assets/my_profile_pic.png";
 import Button from "../components/common/Buttons";
 import ResumeModal from "../components/common/ResumeModal";
 import { Role } from "../types/types";
+import Footer from "../components/layout/Footer";
 
 const roles: Role[] = [
   { name: "Full Stack Developer", icon: "fas fa-code" },
@@ -46,7 +47,9 @@ const Home = () => {
               initial="hidden"
               animate="visible"
             >
-              Hi, I am Full Stack App and Web Developer
+              <span className="hello">Hello</span>
+              <span className="name">I'm Umair</span>
+              <span className="title">Software Developer</span>
             </motion.h1>
             <div className="d-flex justify-content-center justify-content-lg-start gap-3">
               <Button text="Hire Me" to="/contacts" />
@@ -58,41 +61,15 @@ const Home = () => {
             </div>
           </div>
           <div className="col-lg-6 text-center position-relative">
-            <div
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                width: "250px", // Reduced size
-                height: "350px", // Adjusted to maintain aspect ratio
-                background: "linear-gradient(45deg, #0d1117, #010409)",
-                borderRadius: "15px",
-                opacity: 0.8,
-                zIndex: 1,
-              }}
-            >
-              <div
-                style={{
-                  position: "absolute",
-                  top: "20%",
-                  left: "20%",
-                  width: "60%",
-                  height: "60%",
-                  background:
-                    "radial-gradient(circle, rgba(240, 185, 62, 0.2), transparent)",
-                  zIndex: 2,
-                }}
-              />
-            </div>
+            <div className="profile-background"></div>
             <motion.img
               src={profileImage}
               alt="Profile"
               className="img-fluid"
               style={{
-                maxWidth: "200px", // Further reduced size
+                maxWidth: "200px",
                 position: "relative",
-                zIndex: 3,
+                zIndex: 4,
               }}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -187,45 +164,7 @@ const Home = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-dark py-4">
-        <div className="container text-center">
-          <p>
-            Email:{" "}
-            <a
-              href="mailto:programmerumair29@gmail.com"
-              className="text-warning"
-            >
-              programmerumair29@gmail.com
-            </a>
-          </p>
-          <p>
-            GitHub:{" "}
-            <a
-              href="https://github.com/UmairRuman?tab=repositories"
-              className="text-warning"
-              target="_blank"
-            >
-              github.com/UmairRuman
-            </a>
-          </p>
-          <p>
-            LinkedIn:{" "}
-            <a
-              href="https://www.linkedin.com/in/umair-ruman-800204285"
-              className="text-warning"
-              target="_blank"
-            >
-              linkedin.com/in/umair-ruman
-            </a>
-          </p>
-          <p>
-            Contact:{" "}
-            <a href="tel:+923072740036" className="text-warning">
-              +92307 2740036
-            </a>
-          </p>
-        </div>
-      </footer>
+      <Footer />
 
       {/* Resume Modal */}
       <ResumeModal

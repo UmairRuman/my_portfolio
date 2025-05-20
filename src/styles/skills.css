@@ -1,0 +1,366 @@
+.skills-page {
+  background: #0A0C10;
+  color: #FFFFFF;
+  min-height: 100vh;
+}
+
+.skills-section {
+  padding: 3rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.skills-heading {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 10px rgba(255, 77, 77, 0.5), 0 0 20px rgba(255, 77, 77, 0.3);
+}
+
+.skills-heading::after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 4px;
+  bottom: -10px;
+  left: 0;
+  background: #FF4D4D;
+  border-radius: 2px;
+}
+
+/* Programming Languages Section */
+.skills-programming {
+  position: relative;
+  overflow: hidden;
+}
+
+.skills-programming::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCI+PGNpcmNsZSBjeD0iMjUiIGN5PSIyNSIgZj0iMjAiIHN0eWxlPSJmaWxsOnJnYmEoMjU1LCA3NywgNzcsIDAuMSk7Ii8+PC9zdmc+');
+  opacity: 0.2;
+  z-index: 0;
+}
+
+.programming-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.programming-item {
+  width: 120px;
+  height: 120px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.programming-item:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 77, 77, 0.5);
+}
+
+.programming-icon {
+  color: #FFFFFF; /* Devicon icons are white by default */
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.programming-name {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #FF4D4D;
+  text-align: center;
+}
+
+/* Frontend Frameworks Section */
+.skills-frontend {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.frontend-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.frontend-card {
+  perspective: 1000px;
+  width: 200px;
+  height: 150px;
+}
+
+.frontend-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.frontend-card:hover .frontend-card-inner {
+  transform: rotateY(180deg);
+}
+
+.frontend-card-front,
+.frontend-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 77, 77, 0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.frontend-card-front {
+  z-index: 2;
+}
+
+.frontend-card-back {
+  transform: rotateY(180deg);
+  padding: 1rem;
+  text-align: center;
+  color: #FFFFFF;
+  font-size: 0.9rem;
+}
+
+.frontend-card-clickable .frontend-card-inner {
+  border: 2px solid #FF4D4D;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 77, 77, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 77, 77, 0);
+  }
+}
+
+.frontend-icon {
+  color: #FFFFFF;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.frontend-name {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #FF4D4D;
+}
+
+/* Backend Services Section */
+.skills-backend {
+  position: relative;
+  overflow: hidden;
+}
+
+.skills-backend::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCI+PGxpbmUgeDE9IjAiIHkxPSIwIiB4Mj0iNTAiIHkyPSI1MCIgc3R5bGU9InN0cm9rZTpyZ2JhKDI1NSwgNzcsIDc3LCAwLjEpOyBzdHJva2Utd2lkdGg6MSIvPjxsaW5lIHgxPSI1MCIgeTE9IjAiIHgyPSIwIiB5Mj0iNTAiIHN0eWxlPSJzdHJva2U6cmdiYSgyNTUsIDc3LCA3NywgMC4xKTsgc3Ryb2tlLXdpZHRoOjEiLz48L3N2Zz4=');
+  opacity: 0.2;
+  z-index: 0;
+}
+
+.backend-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.backend-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.5s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 77, 77, 0.2);
+}
+
+.backend-card:hover {
+  transform: translateX(10px);
+  box-shadow: 0 8px 20px rgba(255, 77, 77, 0.4);
+}
+
+.backend-icon {
+  color: #FFFFFF;
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+
+.backend-name {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #FF4D4D;
+}
+
+/* Flutter-Specific Skills Section */
+.skills-flutter {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.flutter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.flutter-tab {
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.flutter-tab:hover {
+  color: #FF4D4D;
+}
+
+.flutter-tab.active {
+  color: #FF4D4D;
+}
+
+.flutter-tab.active::after {
+  content: '';
+  position: absolute;
+  width: 50%;
+  height: 3px;
+  bottom: 0;
+  left: 25%;
+  background: #FF4D4D;
+  border-radius: 2px;
+}
+
+.flutter-tab-content {
+  padding: 1rem;
+}
+
+.flutter-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.flutter-skill-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.2rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 77, 77, 0.2);
+}
+
+.flutter-skill-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(255, 77, 77, 0.4);
+}
+
+.flutter-skill-icon {
+  color: #FFFFFF;
+  font-size: 1.5rem;
+  margin-right: 0.8rem;
+}
+
+.flutter-skill-name {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #FF4D4D;
+}
+
+@media (max-width: 768px) {
+  .skills-heading {
+    font-size: 2rem;
+  }
+
+  .programming-item {
+    width: 100px;
+    height: 100px;
+  }
+
+  .programming-icon,
+  .frontend-icon,
+  .backend-icon,
+  .flutter-skill-icon {
+    font-size: 1.5rem;
+  }
+
+  .programming-name,
+  .frontend-name,
+  .backend-name,
+  .flutter-skill-name {
+    font-size: 1rem;
+  }
+
+  .frontend-card {
+    width: 180px;
+    height: 130px;
+  }
+
+  .frontend-card-back {
+    font-size: 0.8rem;
+  }
+
+  .backend-card {
+    padding: 1rem;
+  }
+
+  .flutter-skills-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  .flutter-tab {
+    font-size: 1rem;
+  }
+}
