@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
 import "../styles/projects.css";
 
 interface Project {
@@ -22,29 +26,56 @@ const Projects: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const itemsPerPage = 1;
 
   const navigate = useNavigate();
-  const radius = 200;
 
-  // Fetch projects from backend with debugging
+  // Dynamically calculate radius based on screen size
+  const [radius, setRadius] = useState<number>(200); // Default radius for larger screens
+
   useEffect(() => {
-    fetch("http://localhost:5000/api/projects?page=1&limit=10")
+    const updateRadius = () => {
+      const screenWidth = window.innerWidth;
+      if (screenWidth <= 768) {
+        // For screens <= 768px, carousel-container is 350px
+        // Inner circle is 50% of 350px = 175px
+        // Cards should be between inner (175px diameter) and outer (350px diameter)
+        // Ideal radius: halfway between inner radius (175/2 = 87.5) and outer radius (350/2 = 175)
+        setRadius((175 + 87.5) / 2); // ~131.25px
+      } else {
+        // For larger screens, carousel-container is 500px
+        // Inner circle is 50% of 500px = 250px
+        // Cards should be between inner (250px diameter) and outer (500px diameter)
+        // Ideal radius: halfway between inner radius (250/2 = 125) and outer radius (500/2 = 250)
+        setRadius((250 + 125) / 2); // ~187.5px, but we'll use 200 as default
+        setRadius(200);
+      }
+    };
+
+    updateRadius();
+    window.addEventListener("resize", updateRadius);
+    return () => window.removeEventListener("resize", updateRadius);
+  }, []);
+
+  // Fetch projects from backend
+  useEffect(() => {
+    fetch("http://localhost:5000/api/projects?page=1&limit=10", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => {
-        console.log("Response status:", res.status); // Debug: Check status
-        if (!res.ok)
-          throw new Error(
-            `Failed to fetch projects: ${res.status} ${res.statusText}`
-          );
+        if (!res.ok) throw new Error("Failed to fetch projects");
         return res.json();
       })
       .then((data: { results: Project[] }) => {
-        console.log("Data received:", data); // Debug: Check data
         setProjects(data.results);
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Error fetching projects:", err); // Debug: Check error
+        console.error("Fetch error:", err.message);
         setError("Failed to load projects. Please try again later.");
         setLoading(false);
       });
@@ -100,6 +131,7 @@ const Projects: React.FC = () => {
   };
 
   const handleProjectClick = (index: number): void => {
+    setCurrentPage(Math.floor(index / itemsPerPage) + 1);
     const projectSection = document.getElementById(
       `project-${projects[index]._id}`
     );
@@ -107,6 +139,14 @@ const Projects: React.FC = () => {
       projectSection.scrollIntoView({ behavior: "smooth", block: "start" });
       setActiveProject(index);
     }
+  };
+
+  const handleImageClick = (imageUrl: string): void => {
+    setSelectedImage(imageUrl);
+  };
+
+  const handleCloseDialog = (): void => {
+    setSelectedImage(null);
   };
 
   const totalPages = Math.ceil(projects.length / itemsPerPage);
@@ -193,7 +233,7 @@ const Projects: React.FC = () => {
       </div>
 
       {/* Project Details Section */}
-      <div className="project-details-section mt-10">
+      <div className="project-details-section">
         {paginatedProjects.map((project, index) => (
           <motion.div
             key={project._id}
@@ -206,29 +246,33 @@ const Projects: React.FC = () => {
             <h3 className="project-detail-title">{project.title}</h3>
             <p className="project-detail-description">{project.description}</p>
             <div className="image-grid">
-              {project.images.slice(0, 6).map((img, imgIndex) => (
-                <motion.div
-                  key={imgIndex}
-                  className="image-card"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: imgIndex * 0.1 }}
-                  whileHover={{
-                    scale: 1.05,
-                    boxShadow: "0 8px 20px rgba(255, 77, 77, 0.3)",
-                  }}
-                >
-                  <img
-                    src={`http://localhost:5000${img}`}
-                    alt={`${project.title} image ${imgIndex + 1}`}
-                    className="project-image"
-                    onError={(e) => {
-                      console.error("Image load failed:", e);
-                      (e.target as HTMLImageElement).style.display = "none";
+              {project.images.map((img, imgIndex) => {
+                const imageUrl = `http://localhost:5000${img}`;
+                return (
+                  <motion.div
+                    key={imgIndex}
+                    className="image-card"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: imgIndex * 0.1 }}
+                    whileHover={{
+                      scale: 1.05,
+                      boxShadow: "0 8px 20px rgba(255, 77, 77, 0.3)",
                     }}
-                  />
-                </motion.div>
-              ))}
+                    onClick={() => handleImageClick(imageUrl)}
+                  >
+                    <img
+                      src={imageUrl}
+                      alt={`${project.title} image ${imgIndex + 1}`}
+                      className="project-image"
+                      onError={(e) => {
+                        console.error(`Image load failed for ${imageUrl}:`, e);
+                        (e.target as HTMLImageElement).style.display = "none";
+                      }}
+                    />
+                  </motion.div>
+                );
+              })}
             </div>
             <div className="category-tags">
               {project.category.map((cat, catIndex) => (
@@ -261,6 +305,22 @@ const Projects: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Image Dialog */}
+      <Dialog open={!!selectedImage} onClose={handleCloseDialog}>
+        <DialogContent>
+          {selectedImage && (
+            <img
+              src={selectedImage}
+              alt="Full-size project image"
+              style={{ maxWidth: "100%", maxHeight: "80vh" }}
+            />
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Close</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

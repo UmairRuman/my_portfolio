@@ -1,4 +1,4 @@
-/* Existing styles for Projects page */
+/* Modified styles for Projects page */
 .projects-container {
   display: flex;
   flex-direction: column;
@@ -34,11 +34,13 @@
   box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
 }
 
+/* Increased the container size to accommodate larger cards */
 .carousel-container {
   position: relative;
-  width: 400px;
-  height: 400px;
+  width: 500px;
+  height: 500px;
   margin-top: 2rem;
+  margin-bottom: 6rem;
 }
 
 .outer-circle {
@@ -58,8 +60,8 @@
 
 .inner-circle {
   position: absolute;
-  width: 60%;
-  height: 60%;
+  width: 50%;
+  height: 50%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -96,11 +98,11 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 80px;
-  height: 80px;
-  margin-left: -40px;
-  margin-top: -40px;
+  width: 100px;
+  height: 100px;
   transform-origin: center center;
+  margin-left: -50px;
+  margin-top: -50px;
 }
 
 .project-card {
@@ -113,10 +115,10 @@
 }
 
 .project-content {
-  width: 64px;
-  height: 64px;
+  width: 80px;
+  height: 80px;
   background: linear-gradient(135deg, #1A1C20 0%, #2A2D34 100%);
-  border-radius: 12px;
+  border-radius: 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -124,12 +126,12 @@
   cursor: pointer;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(255, 77, 77, 0.2), inset 0 2px 4px rgba(255, 255, 255, 0.05);
   transition: all 0.3s ease;
-  padding: 0.5rem;
+  padding: 0.75rem;
   overflow: hidden;
 }
 
 .project-content:hover, .active-project {
-  transform: scale(1.15);
+  transform: scale(1.12); /* Added scale transform for hover effect */
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 0 3px rgba(255, 77, 77, 0.6), 0 0 20px rgba(255, 77, 77, 0.4), inset 0 4px 6px rgba(255, 255, 255, 0.1);
 }
 
@@ -139,9 +141,9 @@
 }
 
 .project-icon {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   color: #FF4D4D;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
   filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
   transition: transform 0.3s ease;
 }
@@ -152,13 +154,12 @@
 
 .project-title {
   text-align: center;
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   font-weight: 600;
   color: #FFFFFF;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* Top card indicator */
 .top-indicator {
   position: absolute;
   top: -30px;
@@ -171,11 +172,11 @@
   box-shadow: 0 0 10px rgba(255, 77, 77, 0.5), inset 0 0 2px rgba(255, 255, 255, 0.2);
 }
 
-/* New styles for Project Details Section */
 .project-details-section {
   width: 100%;
   max-width: 800px;
   padding: 2rem;
+  margin-top: 2rem;
 }
 
 .project-detail-card {
@@ -273,26 +274,28 @@
   margin: 0 1rem;
 }
 
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .carousel-container {
-    width: 300px;
-    height: 300px;
+    width: 350px;
+    height: 350px;
+    margin-bottom: 5rem;
   }
   .project-content {
-    width: 56px;
-    height: 56px;
+    width: 70px;
+    height: 70px;
   }
   .project-position {
-    width: 60px;
-    height: 60px;
-    margin-left: -30px;
-    margin-top: -30px;
+    width: 70px;
+    height: 70px;
+    margin-left: -35px;
+    margin-top: -35px;
   }
   .project-icon {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
   }
   .project-title {
-    font-size: 0.5rem;
+    font-size: 0.65rem;
   }
   .projects-heading {
     font-size: 2rem;
@@ -300,6 +303,7 @@
   }
   .project-details-section {
     padding: 1rem;
+    margin-top: 2rem;
   }
   .project-detail-card {
     padding: 1rem;
