@@ -90,7 +90,7 @@ const Skills = () => {
                 <span className="frontend-name">Android Native</span>
               </div>
               <div className="frontend-card-back">
-                <p>Native Android development with Kotlin and Java.</p>
+                <p>Native Android development with Java.</p>
               </div>
             </div>
           </motion.div>
@@ -124,10 +124,10 @@ const Skills = () => {
             <div className="frontend-card-inner">
               <div className="frontend-card-front">
                 <i className="devicon-react-plain frontend-icon"></i>
-                <span className="frontend-name">React Native</span>
+                <span className="frontend-name">React Js</span>
               </div>
               <div className="frontend-card-back">
-                <p>Cross-platform mobile apps with React.</p>
+                <p>Front end framwork for creating websites</p>
               </div>
             </div>
           </motion.div>

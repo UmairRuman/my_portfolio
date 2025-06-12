@@ -73,7 +73,7 @@ const Skills = () => {
             custom={2}
             viewport={{ once: true }}
           >
-            <span className="skill-name">React Native</span>
+            <span className="skill-name">React Js</span>
           </motion.div>
         </div>
       </section>

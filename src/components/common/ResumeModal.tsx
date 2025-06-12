@@ -37,11 +37,11 @@ const ResumeModal: React.FC<ResumeModalProps> = ({
         padding: 0,
         maxWidth: "500px",
         width: "90%",
-        zIndex: 1000, // Ensure content is above other elements
+        zIndex: 1000,
       },
       overlay: {
         backgroundColor: "rgba(0, 0, 0, 0.8)",
-        zIndex: 999, // Increase z-index to ensure overlay is above image background
+        zIndex: 999,
       },
     }}
   >
@@ -58,15 +58,16 @@ const ResumeModal: React.FC<ResumeModalProps> = ({
       </div>
       <div className="d-flex justify-content-center gap-3 mb-4">
         <a
-          href="/path-to-resume.pdf"
+          href="public\UmairRumanCV.pdf"
           download
           className="btn button-primary resume-modal-button"
         >
           <i className="fas fa-download"></i> Download Resume
         </a>
         <a
-          href="/path-to-resume.pdf"
+          href="public\UmairRumanCV.pdf"
           target="_blank"
+          rel="noopener noreferrer"
           className="btn button-secondary resume-modal-button"
         >
           <i className="fas fa-eye"></i> View Online

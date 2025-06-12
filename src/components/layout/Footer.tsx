@@ -6,7 +6,7 @@ const Footer = () => (
       {/* Branding */}
       <div className="footer-brand mb-4">
         <h3>Umair Ruman</h3>
-        <p className="footer-tagline">Software Developer | Innovator</p>
+        <p className="footer-tagline">Full Stack Developer | Innovator</p>
       </div>
 
       {/* Navigation Links */}

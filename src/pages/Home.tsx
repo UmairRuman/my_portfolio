@@ -7,10 +7,10 @@ import { Role } from "../types/types";
 import Footer from "../components/layout/Footer";
 
 const roles: Role[] = [
-  { name: "Full Stack Developer", icon: "fas fa-code" },
-  { name: "Android Native", icon: "fab fa-android" },
-  { name: "Flutter", icon: "fas fa-feather" },
-  { name: "MERN Stack", icon: "fab fa-node-js" },
+  { name: "Full Stack Developer", icon: "fas fa-code" }, // Generic code icon
+  { name: "Android Native", icon: "fab fa-android" }, // Android icon
+  { name: "Flutter", icon: "devicon-flutter-plain" }, // Flutter icon (ensure Font Awesome supports it)
+  { name: "MERN Stack", icon: "fab fa-node-js" }, // Node.js icon for MERN
 ];
 
 const textVariants = {
@@ -49,7 +49,7 @@ const Home = () => {
             >
               <span className="hello">Hello</span>
               <span className="name">I'm Umair</span>
-              <span className="title">Software Developer</span>
+              <span className="title">Full Stack Developer</span>
             </motion.h1>
             <div className="d-flex justify-content-center justify-content-lg-start gap-3">
               <Button text="Hire Me" to="/contacts" />
@@ -67,7 +67,7 @@ const Home = () => {
               alt="Profile"
               className="img-fluid"
               style={{
-                maxWidth: "200px",
+                maxWidth: "250px",
                 position: "relative",
                 zIndex: 4,
               }}
@@ -80,7 +80,7 @@ const Home = () => {
       </section>
 
       {/* About Section */}
-      <section className="container py-5">
+      <section className="container.py-5">
         <div className="about-section">
           <div className="row">
             <div className="col-lg-4 text-center text-lg-start mb-4 mb-lg-0">
@@ -112,12 +112,14 @@ const Home = () => {
                 developer, having working experience in both Web (
                 <span className="highlight"> Mern Stack</span>) and App (
                 <span className="highlight">Android Native + Flutter</span>). I
-                have worked on multiple projects, including IOT , E-commerce and
-                SaaS etc. I am capable and flexible to work in any technology
-                and framework beacuse my learning capability is not only bound
-                to specific framework. I am a fast learner and can adapt to new
-                technologies easily. Now i am learning AI specifically{" "}
-                <span className="highlight">Deep Learning</span>.
+                have worked on multiple projects including categories Education
+                ,Medical , IOT , E-commerce and SaaS etc. I am capable and
+                flexible to work in any technology and framework beacuse my
+                learning capability is not only bound to framework specific. I
+                am a fast learner and can adapt to new technologies easily. Now
+                i am learning AI specifically{" "}
+                <span className="highlight">Deep Learning</span> to enhance my
+                expertise and provide automated solutions.
               </motion.p>
               {/* Stats Section */}
               <div className="stats-section">

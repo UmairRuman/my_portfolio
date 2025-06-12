@@ -6,13 +6,25 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import "../styles/projects.css";
+import carWashLogo from "../assets/car-wash_7050469.png";
+import homeManagementLogo from "../assets/home_management_app.png";
+import clubAppLogo from "../assets/meditation-app_2159369.png";
+import recipeBookAppLogo from "../assets/recipe_book_logo1.png";
+import chattingAppLogo from "../assets/Chatting App.png";
+import homeAutomationLogo from "../assets/home_automation.png";
+import healthBookLogo from "../assets/health_book_logo.png";
+import kwelaLogo from "../assets/kwela_logo.png";
+import unitConverterLogo from "../assets/unit_converter_logo.png";
 
 interface Project {
   _id: string;
   title: string;
-  description: string;
+
+  short_description: string;
+  detailed_description: string;
   images: string[];
   category: string[];
+  logo?: string; // Optional logo path
 }
 
 const Projects: React.FC = () => {
@@ -27,29 +39,36 @@ const Projects: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [flippedProjects, setFlippedProjects] = useState<{
+    [key: string]: boolean;
+  }>({});
   const itemsPerPage = 1;
 
   const navigate = useNavigate();
 
+  // Logo mapping
+  const projectLogoMap: { [key: string]: string } = {
+    "Car Wash App": carWashLogo,
+    "Home Management": homeManagementLogo,
+    "Meditation Club App": clubAppLogo,
+    "Recipe Book": recipeBookAppLogo,
+    "Chat App": chattingAppLogo,
+    "Home Automation": homeAutomationLogo,
+    "Health Book": healthBookLogo,
+    "Unit Converter": unitConverterLogo,
+    Kwela: kwelaLogo,
+  };
+
   // Dynamically calculate radius based on screen size
-  const [radius, setRadius] = useState<number>(200); // Default radius for larger screens
+  const [radius, setRadius] = useState<number>(220);
 
   useEffect(() => {
     const updateRadius = () => {
       const screenWidth = window.innerWidth;
       if (screenWidth <= 768) {
-        // For screens <= 768px, carousel-container is 350px
-        // Inner circle is 50% of 350px = 175px
-        // Cards should be between inner (175px diameter) and outer (350px diameter)
-        // Ideal radius: halfway between inner radius (175/2 = 87.5) and outer radius (350/2 = 175)
-        setRadius((175 + 87.5) / 2); // ~131.25px
+        setRadius(150); // Updated for 9 projects
       } else {
-        // For larger screens, carousel-container is 500px
-        // Inner circle is 50% of 500px = 250px
-        // Cards should be between inner (250px diameter) and outer (500px diameter)
-        // Ideal radius: halfway between inner radius (250/2 = 125) and outer radius (500/2 = 250)
-        setRadius((250 + 125) / 2); // ~187.5px, but we'll use 200 as default
-        setRadius(200);
+        setRadius(220); // Updated for 9 projects
       }
     };
 
@@ -72,6 +91,15 @@ const Projects: React.FC = () => {
       })
       .then((data: { results: Project[] }) => {
         setProjects(data.results);
+        // Initialize flipped state for all projects
+        const initialFlippedState = data.results.reduce(
+          (acc: { [key: string]: boolean }, project: Project) => {
+            acc[project._id] = false;
+            return acc;
+          },
+          {}
+        );
+        setFlippedProjects(initialFlippedState);
         setLoading(false);
       })
       .catch((err) => {
@@ -129,17 +157,25 @@ const Projects: React.FC = () => {
     isHovering.current = false;
     setActiveProject(topProjectIndex);
   };
+  const pendingScrollId = useRef<string | null>(null);
 
-  const handleProjectClick = (index: number): void => {
-    setCurrentPage(Math.floor(index / itemsPerPage) + 1);
-    const projectSection = document.getElementById(
-      `project-${projects[index]._id}`
-    );
-    if (projectSection) {
-      projectSection.scrollIntoView({ behavior: "smooth", block: "start" });
-      setActiveProject(index);
-    }
+  const handleProjectClick = (index: number) => {
+    setCurrentPage(index + 1); // <-- schedule the page switch
+    pendingScrollId.current = projects[index]._id; // remember where to scroll
+    setActiveProject(index); // this part is fine
   };
+
+  /** scroll *after* the page switch is rendered */
+  useEffect(() => {
+    if (!pendingScrollId.current) return;
+
+    // wait until the element for the new page exists in the DOM
+    const el = document.getElementById(`project-${pendingScrollId.current}`);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      pendingScrollId.current = null; // done
+    }
+  }, [currentPage, projects]); // runs whenever the page (DOM) changes
 
   const handleImageClick = (imageUrl: string): void => {
     setSelectedImage(imageUrl);
@@ -147,6 +183,13 @@ const Projects: React.FC = () => {
 
   const handleCloseDialog = (): void => {
     setSelectedImage(null);
+  };
+
+  const toggleFlip = (projectId: string) => {
+    setFlippedProjects((prev) => ({
+      ...prev,
+      [projectId]: !prev[projectId],
+    }));
   };
 
   const totalPages = Math.ceil(projects.length / itemsPerPage);
@@ -170,6 +213,37 @@ const Projects: React.FC = () => {
     }
   };
 
+  // Function to calculate dynamic heights based on number of images
+  const calculateCardHeight = (numberOfImages: number) => {
+    const isMobile = window.innerWidth <= 768;
+
+    if (isMobile) {
+      // Mobile: 2 images per row, image height 110px, gap 6px
+      const imagesPerRow = 2;
+      const imageHeight = 110;
+      const gap = 6;
+      const rows = Math.ceil(numberOfImages / imagesPerRow);
+      const imageGridHeight = rows * imageHeight + (rows - 1) * gap;
+      // Additional space: title (~30px), tags (~20px), button (~40px), padding/margins (~50px)
+      const additionalHeight = 30 + 20 + 40 + 50;
+      const cardHeight = imageGridHeight + additionalHeight;
+      const flipContainerHeight = cardHeight - 40 - 20; // Subtract button and some margin
+      return { cardHeight, flipContainerHeight, imageGridHeight };
+    } else {
+      // Desktop: 4 images per row, image height 140px, gap 8px
+      const imagesPerRow = 4;
+      const imageHeight = 140;
+      const gap = 8;
+      const rows = Math.ceil(numberOfImages / imagesPerRow);
+      const imageGridHeight = rows * imageHeight + (rows - 1) * gap;
+      // Additional space: title (~40px), tags (~30px), button (~40px), padding/margins (~70px)
+      const additionalHeight = 40 + 30 + 40 + 70;
+      const cardHeight = imageGridHeight + additionalHeight;
+      const flipContainerHeight = cardHeight - 40 - 30; // Subtract button and some margin
+      return { cardHeight, flipContainerHeight, imageGridHeight };
+    }
+  };
+
   if (loading) return <div className="projects-container">Loading...</div>;
   if (error) return <div className="projects-container">{error}</div>;
   if (projects.length === 0)
@@ -185,8 +259,8 @@ const Projects: React.FC = () => {
         <div className="inner-circle">
           <p className="inner-circle-text">
             {activeProject !== null
-              ? projects[activeProject].description
-              : projects[topProjectIndex].description}
+              ? projects[activeProject].short_description
+              : projects[topProjectIndex].short_description}
           </p>
         </div>
 
@@ -221,9 +295,19 @@ const Projects: React.FC = () => {
                     onClick={() => handleProjectClick(index)}
                   >
                     <div className="project-icon">
-                      {["🚗", "🏠", "📝", "🍲", "🧘", "💬"][index % 6]}
+                      <img
+                        src={
+                          projectLogoMap[project.title] ||
+                          "/path/to/default-logo.png"
+                        }
+                        alt={`${project.title} logo`}
+                        style={{
+                          width: "40px",
+                          height: "40px",
+                          objectFit: "contain",
+                        }}
+                      />
                     </div>
-                    <div className="project-title">{project.title}</div>
                   </div>
                 </div>
               </div>
@@ -234,55 +318,123 @@ const Projects: React.FC = () => {
 
       {/* Project Details Section */}
       <div className="project-details-section">
-        {paginatedProjects.map((project, index) => (
-          <motion.div
-            key={project._id}
-            id={`project-${project._id}`}
-            className="project-detail-card mb-8"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.2 }}
-          >
-            <h3 className="project-detail-title">{project.title}</h3>
-            <p className="project-detail-description">{project.description}</p>
-            <div className="image-grid">
-              {project.images.map((img, imgIndex) => {
-                const imageUrl = `http://localhost:5000${img}`;
-                return (
-                  <motion.div
-                    key={imgIndex}
-                    className="image-card"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: imgIndex * 0.1 }}
-                    whileHover={{
-                      scale: 1.05,
-                      boxShadow: "0 8px 20px rgba(255, 77, 77, 0.3)",
-                    }}
-                    onClick={() => handleImageClick(imageUrl)}
+        {paginatedProjects.map((project, index) => {
+          const { cardHeight, flipContainerHeight, imageGridHeight } =
+            calculateCardHeight(project.images.length);
+
+          return (
+            <motion.div
+              key={project._id}
+              id={`project-${project._id}`}
+              className="project-detail-card"
+              style={{ height: `${cardHeight}px` }} // Dynamic height
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+            >
+              <motion.div
+                className="flip-container"
+                initial={false}
+                animate={{ rotateY: flippedProjects[project._id] ? 180 : 0 }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  height: `${flipContainerHeight}px`, // Dynamic height
+                }}
+              >
+                {/* Front Side (Images) */}
+                <motion.div
+                  className="flip-front"
+                  style={{
+                    backfaceVisibility: "hidden",
+                    position: "absolute",
+                    width: "100%",
+                  }}
+                >
+                  <h3 className="project-detail-title">{project.title}</h3>
+                  <div className="category-tags">
+                    {project.category.map((cat, catIndex) => (
+                      <span key={catIndex} className="category-tag">
+                        {cat}
+                      </span>
+                    ))}
+                  </div>
+                  <div
+                    className="image-grid-horizontal"
+                    style={{ maxHeight: `${imageGridHeight}px` }} // Dynamic max-height
                   >
-                    <img
-                      src={imageUrl}
-                      alt={`${project.title} image ${imgIndex + 1}`}
-                      className="project-image"
-                      onError={(e) => {
-                        console.error(`Image load failed for ${imageUrl}:`, e);
-                        (e.target as HTMLImageElement).style.display = "none";
-                      }}
-                    />
-                  </motion.div>
-                );
-              })}
-            </div>
-            <div className="category-tags">
-              {project.category.map((cat, catIndex) => (
-                <span key={catIndex} className="category-tag">
-                  {cat}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-        ))}
+                    {project.images.map((img, imgIndex) => {
+                      const imageUrl = `http://localhost:5000${img}`;
+                      return (
+                        <motion.div
+                          key={imgIndex}
+                          className="image-card-horizontal"
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: imgIndex * 0.1 }}
+                          whileHover={{
+                            scale: 1.05,
+                            boxShadow: "0 8px 20px rgba(255, 77, 77, 0.3)",
+                          }}
+                          onClick={() => handleImageClick(imageUrl)}
+                        >
+                          <img
+                            src={imageUrl}
+                            alt={`${project.title} image ${imgIndex + 1}`}
+                            className="project-image-horizontal"
+                            onError={(e) => {
+                              console.error(
+                                `Image load failed for ${imageUrl}:`,
+                                e
+                              );
+                              (e.target as HTMLImageElement).style.display =
+                                "none";
+                            }}
+                          />
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </motion.div>
+
+                {/* Back Side (Description) */}
+                <motion.div
+                  className="flip-back"
+                  style={{
+                    backfaceVisibility: "hidden",
+                    position: "absolute",
+                    width: "100%",
+                    transform: "rotateY(180deg)",
+                  }}
+                >
+                  <h3 className="project-detail-title">{project.title}</h3>
+                  <div className="description-content">
+                    <p className="project-detail-description-full">
+                      {project.detailed_description}
+                    </p>
+                    <div className="category-tags">
+                      {project.category.map((cat, catIndex) => (
+                        <span key={catIndex} className="category-tag">
+                          {cat}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+
+              {/* Description Button (Outside Flip Container) */}
+              <button
+                className="description-button"
+                onClick={() => toggleFlip(project._id)}
+              >
+                {flippedProjects[project._id] ? "Show Images" : "Description"}
+              </button>
+            </motion.div>
+          );
+        })}
+
         {projects.length > itemsPerPage && (
           <div className="pagination">
             <button
