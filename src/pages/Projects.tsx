@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
-import "../styles/projects.css";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import { motion } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
+import chattingAppLogo from "../assets/Chatting App.png";
 import carWashLogo from "../assets/car-wash_7050469.png";
+import healthBookLogo from "../assets/health_book_logo.png";
+import homeAutomationLogo from "../assets/home_automation.png";
 import homeManagementLogo from "../assets/home_management_app.png";
+import kwelaLogo from "../assets/kwela_logo.png";
 import clubAppLogo from "../assets/meditation-app_2159369.png";
 import recipeBookAppLogo from "../assets/recipe_book_logo1.png";
-import chattingAppLogo from "../assets/Chatting App.png";
-import homeAutomationLogo from "../assets/home_automation.png";
-import healthBookLogo from "../assets/health_book_logo.png";
-import kwelaLogo from "../assets/kwela_logo.png";
 import unitConverterLogo from "../assets/unit_converter_logo.png";
+import "../styles/projects.css";
 
 interface Project {
   _id: string;
@@ -76,7 +76,7 @@ const Projects: React.FC = () => {
 
   // Fetch projects from backend
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}?page=1&limit=10`, {
+    fetch(`${import.meta.env.VITE_REACT_APP_API_URL}?page=1&limit=10`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -362,7 +362,10 @@ const Projects: React.FC = () => {
                     style={{ maxHeight: `${imageGridHeight}px` }} // Dynamic max-height
                   >
                     {project.images.map((img, imgIndex) => {
-                      const imageUrl = `http://localhost:5000${img}`;
+                      const imageUrl = `${import.meta.env.VITE_REACT_APP_API_URL.replace(
+                        /\/api\/projects$/,
+                        ""
+                      )}${img}`; // e.g., https://myportfoliobackend-production-6864.up.railway.app/utils/images/projects/car_wash/car_wash_1.jpg
                       return (
                         <motion.div
                           key={imgIndex}
