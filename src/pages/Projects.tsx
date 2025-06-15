@@ -76,7 +76,7 @@ const Projects: React.FC = () => {
 
   // Fetch projects from backend
   useEffect(() => {
-    fetch("http://localhost:5000/api/projects?page=1&limit=10", {
+    fetch(`${process.env.REACT_APP_API_URL}?page=1&limit=10`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
