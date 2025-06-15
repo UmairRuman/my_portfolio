@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -43,8 +42,6 @@ const Projects: React.FC = () => {
     [key: string]: boolean;
   }>({});
   const itemsPerPage = 1;
-
-  const navigate = useNavigate();
 
   // Logo mapping
   const projectLogoMap: { [key: string]: string } = {

@@ -1,5 +1,3 @@
-import { NavLink } from "react-router-dom";
-
 const Footer = () => (
   <footer className="footer py-5">
     <div className="container text-center">
