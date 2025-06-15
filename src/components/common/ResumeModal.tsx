@@ -58,14 +58,14 @@ const ResumeModal: React.FC<ResumeModalProps> = ({
       </div>
       <div className="d-flex justify-content-center gap-3 mb-4">
         <a
-          href="public\UmairRumanCV.pdf"
+          href="public/my_cv.pdf"
           download
           className="btn button-primary resume-modal-button"
         >
           <i className="fas fa-download"></i> Download Resume
         </a>
         <a
-          href="public\UmairRumanCV.pdf"
+          href="public/my_cv.pdf"
           target="_blank"
           rel="noopener noreferrer"
           className="btn button-secondary resume-modal-button"
