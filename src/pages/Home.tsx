@@ -3,8 +3,8 @@ import { useState } from "react";
 import profileImage from "../assets/my_profile_pic.png";
 import Button from "../components/common/Buttons";
 import ResumeModal from "../components/common/ResumeModal";
-import { Role } from "../types/types";
 import Footer from "../components/layout/Footer";
+import { Role } from "../types/types";
 
 const roles: Role[] = [
   { name: "Full Stack Developer", icon: "fas fa-code" }, // Generic code icon
@@ -108,18 +108,30 @@ const Home = () => {
                 transition={{ duration: 1 }}
                 viewport={{ once: true }}
               >
-                I have started my programming journey in 2021, I am a full stack
-                developer, having working experience in both Web (
-                <span className="highlight"> Mern Stack</span>) and App (
-                <span className="highlight">Android Native + Flutter</span>). I
-                have worked on multiple projects including categories Education
-                ,Medical , IOT , E-commerce and SaaS etc. I am capable and
-                flexible to work in any technology and framework beacuse my
-                learning capability is not only bound to framework specific. I
-                am a fast learner and can adapt to new technologies easily. Now
-                i am learning AI specifically{" "}
-                <span className="highlight">Deep Learning</span> to enhance my
-                expertise and provide automated solutions.
+                <p>
+                  Started my programming journey in 2021, and since then I've
+                  grown into a skilled
+                  <strong>Full Stack Developer</strong> with hands-on experience
+                  in both Web (<span className="highlight">MERN Stack</span>)
+                  and Mobile (
+                  <span className="highlight">Android Native + Flutter</span>)
+                  development.
+                </p>
+
+                <p>
+                  I’ve contributed to a wide range of projects across domains
+                  like
+                  <strong>Education, Medical, IoT, E-commerce,</strong> and{" "}
+                  <strong>SaaS</strong>. With a strong ability to learn and
+                  adapt quickly, I’m not limited to any specific technology or
+                  framework.
+                </p>
+
+                <p>
+                  Continuously evolving, I’m currently diving into
+                  <span className="highlight">Deep Learning</span> to expand my
+                  expertise and build intelligent, automated solutions.
+                </p>
               </motion.p>
               {/* Stats Section */}
               <div className="stats-section">

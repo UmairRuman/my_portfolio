@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { useRef, useState } from "react";
 import "../styles/skills.css";
 
 // Define the type for flutterTabs
@@ -7,7 +7,9 @@ interface FlutterTabs {
   stateManagement: string[];
   paymentIntegration: string[];
   databases: string[];
-  generalSkills: string[];
+  advanceSkills: string[];
+  CiCdPipelines: string[];
+  testing: string[];
 }
 
 // Define the possible tab keys
@@ -34,12 +36,24 @@ const Skills = () => {
     stateManagement: ["Bloc", "Riverpod", "Provider", "GetX"],
     paymentIntegration: ["Stripe", "PayPal", "JazzCash"],
     databases: ["Realm", "MongoDB", "Hive", "SQFlite", "ObjectBox"],
-    generalSkills: [
+    advanceSkills: [
+      "Firebase Complete",
+      "Google AdMob integration",
+      "Flame Gaming engine",
+      "Localization and Internationalization",
       "APIs (Expert in all RESTful APIs)",
       "Flutter Channels",
       "Flutter Clean Architecture",
       "Navigator 2.0",
       "Pagination",
+      "App Deployment Experience",
+    ],
+    CiCdPipelines: ["GitHub Actions", "Fastlane", "Codemagic", "Bitrise"],
+    testing: [
+      "Testing Automation",
+      "Unit Testing",
+      "Widget Testing",
+      "Integration Testing",
     ],
   };
 
@@ -74,7 +88,7 @@ const Skills = () => {
 
       {/* Frontend Frameworks */}
       <section className="skills-section skills-frontend mb-5">
-        <h2 className="skills-heading mb-4">Frontend Frameworks</h2>
+        <h2 className="skills-heading mb-4">Frontend Frameworks and SDKs</h2>
         <div className="frontend-list">
           <motion.div
             className="frontend-card"
@@ -127,7 +141,7 @@ const Skills = () => {
                 <span className="frontend-name">React Js</span>
               </div>
               <div className="frontend-card-back">
-                <p>Front end framwork for creating websites</p>
+                <p>Front end framework for creating websites</p>
               </div>
             </div>
           </motion.div>
@@ -168,38 +182,20 @@ const Skills = () => {
 
         {/* Tabs */}
         <div className="flutter-tabs mb-4">
-          <button
-            className={`flutter-tab ${
-              activeTab === "stateManagement" ? "active" : ""
-            }`}
-            onClick={() => setActiveTab("stateManagement")}
-          >
-            State Management
-          </button>
-          <button
-            className={`flutter-tab ${
-              activeTab === "paymentIntegration" ? "active" : ""
-            }`}
-            onClick={() => setActiveTab("paymentIntegration")}
-          >
-            Payment Integration
-          </button>
-          <button
-            className={`flutter-tab ${
-              activeTab === "databases" ? "active" : ""
-            }`}
-            onClick={() => setActiveTab("databases")}
-          >
-            Databases
-          </button>
-          <button
-            className={`flutter-tab ${
-              activeTab === "generalSkills" ? "active" : ""
-            }`}
-            onClick={() => setActiveTab("generalSkills")}
-          >
-            General Skills
-          </button>
+          {(Object.keys(flutterTabs) as TabKey[]).map((key) => (
+            <button
+              key={key}
+              className={`flutter-tab ${activeTab === key ? "active" : ""}`}
+              onClick={() => setActiveTab(key)}
+            >
+              {key === "stateManagement" && "State Management"}
+              {key === "paymentIntegration" && "Payment Integration"}
+              {key === "databases" && "Databases"}
+              {key === "advanceSkills" && "Advance Skills"}
+              {key === "CiCdPipelines" && "CI/CD Pipelines"}
+              {key === "testing" && "Testing"}
+            </button>
+          ))}
         </div>
 
         {/* Tab Content */}
