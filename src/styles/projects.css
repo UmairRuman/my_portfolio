@@ -221,7 +221,8 @@ background: linear-gradient(135deg, #1A1C20 0%, #3A3D44 100%); /* Slightly light
 }
 
 .flip-back {
-  justify-content: center;
+  justify-content: flex-start; /* Changed from center to flex-start */
+  padding-top: 1rem; /* Add some top padding */
 }
 
 .description-button {
@@ -270,15 +271,40 @@ background: linear-gradient(135deg, #1A1C20 0%, #3A3D44 100%); /* Slightly light
   text-align: center;
   margin-bottom: 2.5rem; /* Increased margin to add more space */
   padding: 0 1rem;
+  /* Add scrolling properties for overflow text */
+  overflow-y: auto;
+  max-height: calc(100% - 120px); /* Reserve space for title, tags, and button */
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: rgba(255, 77, 77, 0.5) transparent; /* For Firefox */
+}
+
+/* Webkit scrollbar styling for description text */
+.project-detail-description-full::-webkit-scrollbar {
+  width: 6px;
+}
+
+.project-detail-description-full::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.project-detail-description-full::-webkit-scrollbar-thumb {
+  background: rgba(255, 77, 77, 0.5);
+  border-radius: 3px;
+}
+
+.project-detail-description-full::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 77, 77, 0.7);
 }
 
 .description-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* Changed from center to flex-start */
   height: 100%;
   padding: 1rem;
+  padding-bottom: 3rem; /* Add bottom padding to account for button */
+  overflow: hidden; /* Prevent the container from overflowing */
 }
 
 /* Horizontal Image Grid - Adjusted for dynamic size */
@@ -422,7 +448,6 @@ background: linear-gradient(135deg, #1A1C20 0%, #3A3D44 100%); /* Slightly light
   
   .projects-heading {
     font-size: 2rem;
-    
   }
   
   .project-details-section {
@@ -440,6 +465,13 @@ background: linear-gradient(135deg, #1A1C20 0%, #3A3D44 100%); /* Slightly light
     font-size: 0.9rem;
     padding: 0 0.5rem;
     margin-bottom: 2rem; /* Increased margin for mobile */
+    /* Enhanced scrolling for mobile with smaller cards */
+    max-height: calc(100% - 140px); /* Reserve more space for mobile elements */
+    padding-right: 0.8rem; /* Add right padding for scrollbar space */
+  }
+  
+  .description-content {
+    padding-bottom: 3.5rem; /* Increase bottom padding for mobile button */
   }
   
   .description-button {

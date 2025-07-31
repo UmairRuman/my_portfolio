@@ -111,9 +111,9 @@ const Home = () => {
                 <p>
                   Started my programming journey in 2021, and since then I've
                   grown into a skilled
-                  <strong>Full Stack Developer</strong> with hands-on experience
-                  in both Web (<span className="highlight">MERN Stack</span>)
-                  and Mobile (
+                  <strong> Full Stack Developer</strong> with hands-on
+                  experience in both Web (
+                  <span className="highlight">MERN Stack</span>) and Mobile (
                   <span className="highlight">Android Native + Flutter</span>)
                   development.
                 </p>
